@@ -1,6 +1,6 @@
 import React from "react";
 import Snowflake from "./Snowflake";
-import "./styles/Snowfall.css";
+import styles from "./styles/Snowfall.module.css";
 
 interface SnowfallProps {
   numFlakes?: number;
@@ -18,7 +18,7 @@ const Snowfall: React.FC<SnowfallProps> = ({
   flakeShape = "❄️",
 }) => {
   return (
-    <div className='snowfall-container'>
+    <div className={styles.snowfallContainer}>
       {Array.from({ length: numFlakes }).map((_, i) => (
         <Snowflake
           key={i}

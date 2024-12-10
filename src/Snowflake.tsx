@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import "./styles/Snowflake.css";
+import styles from "./styles/Snowflake.module.css";
 
 interface SnowflakeProps {
   fallSpeed: number; // 낙하 속도
@@ -51,7 +51,7 @@ const Snowflake: React.FC<SnowflakeProps> = ({
       flake.style.left = `${x}px`;
 
       // 회전 효과
-      const rotation = (elapsed * (10 + (startX % 20))); // 회전 속도 감소
+      const rotation = elapsed * (10 + (startX % 20)); // 회전 속도 감소
       flake.style.transform = `rotate(${rotation}deg)`;
 
       if (y < height + 50) {
@@ -70,7 +70,7 @@ const Snowflake: React.FC<SnowflakeProps> = ({
   }, [fallSpeed]);
 
   return (
-    <div ref={flakeRef} className='snowflake'>
+    <div ref={flakeRef} className={styles.snowflake}>
       {shape}
     </div>
   );
