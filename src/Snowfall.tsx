@@ -8,6 +8,7 @@ interface SnowfallProps {
   flakeSize?: number;
   opacity?: number;
   flakeShape?: string;
+  children?: React.ReactNode;
 }
 
 const Snowfall: React.FC<SnowfallProps> = ({
@@ -16,6 +17,7 @@ const Snowfall: React.FC<SnowfallProps> = ({
   flakeSize = 10,
   opacity = 1,
   flakeShape = "❄️",
+  children,
 }) => {
   return (
     <div className={styles.snowfallContainer}>
@@ -28,6 +30,7 @@ const Snowfall: React.FC<SnowfallProps> = ({
           shape={flakeShape}
         />
       ))}
+      {children}
     </div>
   );
 };
