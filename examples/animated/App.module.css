@@ -1,0 +1,26 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(to bottom, #1a1a1a, #1f5396);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.title {
+  color: white;
+  font-size: 2.5rem;
+  text-align: center;
+  z-index: 1;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6;
+  }
+  to {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6;
+  }
+}
