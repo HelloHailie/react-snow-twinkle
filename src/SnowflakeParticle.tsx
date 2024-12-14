@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import styles from "./styles/Snowflake.module.css";
+import styles from "./styles/SnowflakeParticle.module.css";
 
 interface SnowflakeProps {
   fallSpeed: number; // 낙하 속도
@@ -8,7 +8,7 @@ interface SnowflakeProps {
   shape: string; // 눈송이 모양 (이모지, 텍스트 등)
 }
 
-const Snowflake: React.FC<SnowflakeProps> = ({
+const SnowflakeParticle: React.FC<SnowflakeProps> = ({
   fallSpeed,
   size,
   opacity,
@@ -76,4 +76,4 @@ const Snowflake: React.FC<SnowflakeProps> = ({
   );
 };
 
-export default Snowflake;
+export default SnowflakeParticle;

@@ -1,8 +1,8 @@
-import React from "react";
-import Snowflake from "./Snowflake";
-import styles from "./styles/SnowTwinkle.module.css";
+import React from 'react';
+import SnowflakeParticle from "./SnowflakeParticle";
+import styles from "./styles/SnowfallEffect.module.css";
 
-interface SnowTwinkleProps {
+interface SnowfallEffectProps {
   numFlakes?: number;
   fallSpeed?: number;
   flakeSize?: number;
@@ -11,7 +11,7 @@ interface SnowTwinkleProps {
   children?: React.ReactNode;
 }
 
-const SnowTwinkle: React.FC<SnowTwinkleProps> = ({
+const SnowfallEffect: React.FC<SnowfallEffectProps> = ({
   numFlakes = 50,
   fallSpeed = 5,
   flakeSize = 10,
@@ -22,7 +22,7 @@ const SnowTwinkle: React.FC<SnowTwinkleProps> = ({
   return (
     <div className={styles.snowfallContainer}>
       {Array.from({ length: numFlakes }).map((_, index) => (
-        <Snowflake
+        <SnowflakeParticle
           key={index}
           fallSpeed={fallSpeed}
           size={flakeSize}
@@ -35,4 +35,4 @@ const SnowTwinkle: React.FC<SnowTwinkleProps> = ({
   );
 };
 
-export default SnowTwinkle;
+export default SnowfallEffect;
