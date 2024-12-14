@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useMemo, useCallback } from "react";
-import styles from "./styles/SnowflakeParticle.module.css";
 
 interface SnowflakeProps {
   fallSpeed: number; // 낙하 속도
@@ -81,7 +80,7 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
   }, [animate, opacity, size]);
 
   return (
-    <div ref={flakeRef} className={styles.snowflake}>
+    <div ref={flakeRef}>
       {shape}
     </div>
   );
