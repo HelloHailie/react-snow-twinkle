@@ -65,8 +65,6 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
     // 초기 스타일 설정
     flake.style.fontSize = `${size}px`;
     flake.style.opacity = `${opacity}`;
-    flake.style.position = 'fixed';
-    flake.style.willChange = 'transform';
     
     // 애니메이션 시작
     animationFrameRef.current = requestAnimationFrame(animate);

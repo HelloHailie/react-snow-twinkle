@@ -1,0 +1,16 @@
+.snowflake {
+  position: fixed;
+  pointer-events: none;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  z-index: 1000;
+  
+  /* 성능 최적화 속성 */
+  contain: layout style paint; 
+  isolation: isolate;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+}
