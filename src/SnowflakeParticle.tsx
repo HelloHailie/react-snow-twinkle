@@ -23,7 +23,7 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
     const height = window.innerHeight;
     return {
       x: Math.random() * width,
-      y: Math.random() * height - height,
+      y: Math.random() * height * -1, // 화면 위쪽에 고르게 분포
     };
   }, []);
 
@@ -58,8 +58,8 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
     flake.style.transform = `translate3d(${x}px, ${positionRef.current.y}px, 0)`;
 
     // 화면 밖으로 나가면 위로 재배치
-    if (positionRef.current.y > window.innerHeight) {
-      positionRef.current.y = -particleSize;
+    if (positionRef.current.y > window.innerHeight + particleSize) {
+      positionRef.current.y = -particleSize * 2;  // 화면 위에서 약간의 여유를 두고 시작
       positionRef.current.x = Math.random() * window.innerWidth;
     }
 
