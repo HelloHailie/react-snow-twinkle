@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useMemo, useCallback } from "react";
 import styles from "./styles/SnowflakeParticle.module.css";
 
 interface SnowflakeProps {
@@ -15,59 +15,70 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
   shape,
 }) => {
   const flakeRef = useRef<HTMLDivElement | null>(null);
+  const animationFrameRef = useRef<number>();
+  const positionRef = useRef({ x: 0, y: 0 });
+
+  // 초기 위치 계산을 메모이제이션
+  const initialPosition = useMemo(() => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height - height,
+    };
+  }, []);
+
+  // 애니메이션 로직을 useCallback으로 최적화
+  const animate = useCallback((timestamp: number) => {
+    const flake = flakeRef.current;
+    if (!flake) return;
+
+    if (!positionRef.current.x) {
+      positionRef.current = { ...initialPosition };
+    }
+
+    const elapsed = timestamp / 1000;
+    
+    // Y 위치 업데이트 (일정한 하강 속도)
+    positionRef.current.y += fallSpeed * 0.5;
+    
+    // X 위치 흔들리게 하기 (더 부드러운 움직임)
+    const swayAmount = 15 + (initialPosition.x % 10);
+    const swaySpeed = 0.3 + (initialPosition.x % 0.5);
+    const x = initialPosition.x + Math.sin(elapsed * swaySpeed) * swayAmount;
+    
+    // transform을 사용하여 하드웨어 가속 활용
+    flake.style.transform = `translate3d(${x}px, ${positionRef.current.y}px, 0)`;
+
+    // 화면 밖으로 나가면 위로 재배치
+    if (positionRef.current.y > window.innerHeight) {
+      positionRef.current.y = -size;
+      positionRef.current.x = Math.random() * window.innerWidth;
+    }
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+  }, [fallSpeed, initialPosition, size]);
 
   useEffect(() => {
     const flake = flakeRef.current;
     if (!flake) return;
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    // 초기 위치를 화면 전체에 고르게 분포
-    const startX = Math.random() * width;
-    const startY = Math.random() * height - height; // 화면 위쪽에서 시작하되 고르게 분포
-
-    // 눈송이 위치와 스타일 초기화
-    flake.style.left = `${startX}px`;
-    flake.style.top = `${startY}px`;
+    // 초기 스타일 설정
     flake.style.fontSize = `${size}px`;
     flake.style.opacity = `${opacity}`;
+    flake.style.position = 'fixed';
+    flake.style.willChange = 'transform';
+    
+    // 애니메이션 시작
+    animationFrameRef.current = requestAnimationFrame(animate);
 
-    let startTime: number | null = null;
-
-    // 눈송이 애니메이션 함수
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = (timestamp - startTime) / 1000;
-
-      // Y 위치 업데이트 (일정한 하강 속도)
-      const y = startY + elapsed * fallSpeed * 50;
-      flake.style.top = `${y}px`;
-
-      // X 위치 흔들리게 하기
-      const swayAmount = 30 + (startX % 20); // 30~50px 사이의 흔들림 폭
-      const swaySpeed = 0.5 + (startX % 1); // 더 천천히 흔들리도록 속도 조절
-      const x = startX + Math.sin(elapsed * swaySpeed) * swayAmount;
-      flake.style.left = `${x}px`;
-
-      // 회전 효과
-      const rotation = elapsed * (10 + (startX % 20)); // 회전 속도 감소
-      flake.style.transform = `rotate(${rotation}deg)`;
-
-      if (y < height + 50) {
-        requestAnimationFrame(animate);
-      } else {
-        // 화면을 벗어나면 위에서 다시 시작
-        const newX = Math.random() * width;
-        flake.style.left = `${newX}px`;
-        flake.style.top = `${-200}px`; // 항상 화면 위에서 시작
-        startTime = null;
-        requestAnimationFrame(animate);
+    // 클린업 함수
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
       }
     };
-
-    requestAnimationFrame(animate);
-  }, [fallSpeed]);
+  }, [animate, opacity, size]);
 
   return (
     <div ref={flakeRef} className={styles.snowflake}>
@@ -76,4 +87,4 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
   );
 };
 
-export default SnowflakeParticle;
+export default React.memo(SnowflakeParticle);
