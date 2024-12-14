@@ -63,17 +63,13 @@ function App() {
 
 ### 설정 옵션
 
-| 옵션 | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| snowflakeCount | number | 50 | 화면에 표시될 눈송이의 수 |
-| speed | number | 1 | 눈이 떨어지는 속도 |
-| wind | number | 0 | 바람 효과의 강도 |
-| color | string | "#fff" | 눈송이의 색상 |
-| size | number | 2 | 눈송이의 크기 |
-| opacity | number | 1 | 눈송이의 투명도 |
-| blur | number | 0 | 눈송이의 블러 효과 |
-
-
+| 옵션 | 기본값 | 최대값 | 설명 |
+|------|--------|--------|------|
+| snowflakeCount | 50 | 500 | 화면에 표시될 눈송이의 수 |
+| fallSpeed | 5 | 20 | 눈이 떨어지는 속도 |
+| flakeSize | 10 | 100 | 눈송이의 크기 |
+| opacity | 1 | - | 눈송이의 투명도 |
+| flakeShape | "❄️" | - | 눈송이의 모양 |
 
 ### 개발 환경 설정
 
