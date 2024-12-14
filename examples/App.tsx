@@ -1,4 +1,4 @@
-import React from 'react';
+
 import SnowfallEffect from '../src/SnowfallEffect';
 import styles from './App.module.css';
 

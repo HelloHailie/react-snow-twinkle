@@ -11,12 +11,12 @@ interface SnowfallEffectProps {
   children?: React.ReactNode;
 }
 
-const MAX_FLAKES = 500;
+const MAX_FLAKES = 700;
 const MAX_SPEED = 20;
 const MAX_SIZE = 100;
 
 const SnowfallEffect: React.FC<SnowfallEffectProps> = ({
-  snowflakeCount = 50,
+  snowflakeCount = 500,
   fallSpeed = 5,
   flakeSize = 10,
   opacity = 1,
