@@ -27,6 +27,11 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
     };
   }, []);
 
+  // 낙하 속도를 메모이제이션 (기준 속도 ± 2)
+  const particleFallSpeed = useMemo(() => {
+    return fallSpeed + (Math.random() * 4 - 2); // fallSpeed ± 2 범위 내 랜덤
+  }, [fallSpeed]);
+
   // 크기를 메모이제이션
   const particleSize = useMemo(() => {
     if (size === 'random') {
@@ -46,8 +51,8 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
 
     const elapsed = timestamp / 1000;
     
-    // Y 위치 업데이트 (일정한 하강 속도)
-    positionRef.current.y += fallSpeed * 0.5;
+    // Y 위치 업데이트 (랜덤한 하강 속도)
+    positionRef.current.y += particleFallSpeed * 0.5;
     
     // X 위치 흔들리게 하기 (더 부드러운 움직임)
     const swayAmount = 15 + (initialPosition.x % 10);
@@ -64,7 +69,7 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
     }
 
     animationFrameRef.current = requestAnimationFrame(animate);
-  }, [fallSpeed, initialPosition, particleSize]);
+  }, [initialPosition, particleFallSpeed, particleSize]);
 
   useEffect(() => {
     const flake = flakeRef.current;
