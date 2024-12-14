@@ -1,8 +1,8 @@
 .snowflake {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  /* background-color: white; */
-  border-radius: 50%;
+  position: fixed;
   pointer-events: none;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  transform: translateZ(0);
 }
