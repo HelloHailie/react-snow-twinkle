@@ -1,12 +1,17 @@
-import React, { useEffect, useRef, useMemo, useCallback } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
+
+// 상수 정의
+const MAX_SPEED = 20;
+const MAX_SIZE = 100;
 
 interface SnowflakeProps {
   fallSpeed: number; // 낙하 속도
-  size: number | 'random'; // 눈송이 크기
+  size: number | 'mix'; // 눈송이 크기
   opacity: number; // 눈송이 투명도
   shape: string; // 눈송이 모양 (이모지, 텍스트 등)
   width: number; // 창 너비
   height: number; // 창 높이
+  startY: number; // 시작 Y 위치
 }
 
 const SnowflakeParticle: React.FC<SnowflakeProps> = ({
@@ -16,87 +21,89 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
   shape,
   width,
   height,
+  startY,
 }) => {
   const flakeRef = useRef<HTMLDivElement | null>(null);
-  const animationFrameRef = useRef<number>();
-  const positionRef = useRef({ x: 0, y: 0 });
+  const animationRef = useRef<Animation | null>(null);
 
-  // 초기 위치 계산을 메모이제이션
-  const initialPosition = useMemo(() => {
-    return {
-      x: Math.random() * width,
-      y: Math.random() * height * -1, // 화면 위쪽에 고르게 분포
-    };
-  }, [width, height]);
-
-  // 낙하 속도를 메모이제이션 (기준 속도 ± 2)
-  const particleFallSpeed = useMemo(() => {
-    return fallSpeed + (Math.random() * 4 - 2); // fallSpeed ± 2 범위 내 랜덤
-  }, [fallSpeed]);
-
+  // 속도와 크기 제한 적용
+  const limitedFallSpeed = Math.min(Math.max(fallSpeed, 0.1), MAX_SPEED);
+  
   // 크기를 메모이제이션
   const particleSize = useMemo(() => {
-    if (size === 'random') {
-      return Math.floor(Math.random() * 3) + 4; // 4~6px
+    if (size === 'mix') {
+      return Math.min(Math.floor(Math.random() * 3) + 4, MAX_SIZE);
     }
-    return size;
+    return Math.min(Math.max(size, 1), MAX_SIZE);
   }, [size]);
 
-  // 애니메이션 로직을 useCallback으로 최적화
-  const animate = useCallback((timestamp: number) => {
-    const flake = flakeRef.current;
-    if (!flake) return;
+  // 화면 높이에 따른 기본 지속 시간 계산
+  const baseDuration = useMemo(() => {
+    // 시작 위치부터 화면 끝까지의 실제 이동 거리 계산
+    const distance = Math.abs(startY) + height;
+    return distance * 15; // 거리에 비례하는 시간 설정
+  }, [height, startY]);
 
-    if (!positionRef.current.x) {
-      positionRef.current = { ...initialPosition };
-    }
-
-    const elapsed = timestamp / 1000;
-    
-    // Y 위치 업데이트 (랜덤한 하강 속도)
-    positionRef.current.y += particleFallSpeed * 0.5;
-    
-    // X 위치 흔들리게 하기 (더 부드러운 움직임)
-    const swayAmount = 15 + (initialPosition.x % 10);
-    const swaySpeed = 0.3 + (initialPosition.x % 0.5);
-    const x = initialPosition.x + Math.sin(elapsed * swaySpeed) * swayAmount;
-    
-    // transform을 사용하여 하드웨어 가속 활용
-    flake.style.transform = `translate3d(${x}px, ${positionRef.current.y}px, 0)`;
-
-    // 화면 밖으로 나가면 위로 재배치
-    if (positionRef.current.y > height + particleSize) {
-      positionRef.current.y = -particleSize * 2;  // 화면 위에서 약간의 여유를 두고 시작
-      positionRef.current.x = Math.random() * width;
-    }
-
-    animationFrameRef.current = requestAnimationFrame(animate);
-  }, [initialPosition, particleFallSpeed, particleSize, height, width]);
+  // 각 눈송이의 고유한 흔들림 특성 계산
+  const swayProperties = useMemo(() => {
+    return {
+      amount: 15 + (Math.random() * 15), // 흔들림 폭 (15-30px)
+      frequency: 0.5 + (Math.random() * 0.5), // 천천히 흔들리도록 빈도 유지
+      phase: Math.random() * Math.PI * 2, // 초기 위상
+    };
+  }, []);
 
   useEffect(() => {
     const flake = flakeRef.current;
     if (!flake) return;
 
-    // 초기 스타일 설정
     flake.style.fontSize = `${particleSize}px`;
     flake.style.opacity = `${opacity}`;
-    
-    // 애니메이션 시작
-    animationFrameRef.current = requestAnimationFrame(animate);
 
-    // 클린업 함수
+    const initialX = Math.random() * width;
+    const duration = baseDuration / Math.max(limitedFallSpeed, 0.1);
+
+    // 더 많은 키프레임으로 부드러운 흔들림 생성
+    const keyframes = Array.from({ length: 100 }, (_, i) => {
+      const progress = i / 99;
+      // 시간에 따른 사인파 계산으로 자연스러운 흔들림
+      const swayX = Math.sin(progress * Math.PI * 2 * swayProperties.frequency + swayProperties.phase) * swayProperties.amount;
+      const currentY = startY + (height + particleSize - startY) * progress;
+      
+      return {
+        transform: `translate3d(${initialX + swayX}px, ${currentY}px, 0)`,
+        offset: progress
+      };
+    });
+
+    const animation = flake.animate(keyframes, {
+      duration,
+      iterations: Infinity,
+      easing: 'linear',
+      composite: 'replace',
+    });
+
+    animationRef.current = animation;
+
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (animationRef.current) {
+        animationRef.current.cancel();
       }
     };
-  }, [animate, opacity, particleSize]);
+  }, [height, width, opacity, limitedFallSpeed, particleSize, startY, baseDuration, swayProperties]);
 
   return (
-    <div ref={flakeRef}>
+    <div 
+      ref={flakeRef}
+      style={{
+        position: 'absolute',
+        willChange: 'transform',
+        pointerEvents: 'none',
+      }}
+    >
       {shape}
     </div>
   );
 };
 
-export default React.memo(SnowflakeParticle);
+export default SnowflakeParticle;
