@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useMemo, useCallback } from "react";
 
 interface SnowflakeProps {
   fallSpeed: number; // 낙하 속도
-  size: number; // 눈송이 크기
+  size: number | 'random'; // 눈송이 크기
   opacity: number; // 눈송이 투명도
   shape: string; // 눈송이 모양 (이모지, 텍스트 등)
 }
@@ -26,6 +26,14 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
       y: Math.random() * height - height,
     };
   }, []);
+
+  // 크기를 메모이제이션
+  const particleSize = useMemo(() => {
+    if (size === 'random') {
+      return Math.floor(Math.random() * 3) + 4; // 4~6px
+    }
+    return size;
+  }, [size]);
 
   // 애니메이션 로직을 useCallback으로 최적화
   const animate = useCallback((timestamp: number) => {
@@ -51,19 +59,19 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
 
     // 화면 밖으로 나가면 위로 재배치
     if (positionRef.current.y > window.innerHeight) {
-      positionRef.current.y = -size;
+      positionRef.current.y = -particleSize;
       positionRef.current.x = Math.random() * window.innerWidth;
     }
 
     animationFrameRef.current = requestAnimationFrame(animate);
-  }, [fallSpeed, initialPosition, size]);
+  }, [fallSpeed, initialPosition, particleSize]);
 
   useEffect(() => {
     const flake = flakeRef.current;
     if (!flake) return;
 
     // 초기 스타일 설정
-    flake.style.fontSize = `${size}px`;
+    flake.style.fontSize = `${particleSize}px`;
     flake.style.opacity = `${opacity}`;
     
     // 애니메이션 시작
@@ -75,7 +83,7 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [animate, opacity, size]);
+  }, [animate, opacity, particleSize]);
 
   return (
     <div ref={flakeRef}>
