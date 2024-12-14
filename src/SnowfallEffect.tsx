@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import SnowflakeParticle from "./SnowflakeParticle";
 import styles from "./styles/SnowfallEffect.module.css";
 
@@ -23,6 +23,35 @@ const SnowfallEffect: React.FC<SnowfallEffectProps> = ({
   flakeShape = "❄️",
   children,
 }) => {
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    // ResizeObserver 설정
+    const resizeObserver = new ResizeObserver(() => {
+      updateDimensions();
+    });
+
+    // document.documentElement를 관찰 대상으로 설정
+    resizeObserver.observe(document.documentElement);
+
+    // 초기 dimensions 설정
+    updateDimensions();
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   // 눈송이 개수, 속도, 크기를 최대값으로 제한
   const limitedFlakes = Math.min(snowflakeCount, MAX_FLAKES);
   const limitedSpeed = Math.min(fallSpeed, MAX_SPEED);
@@ -37,6 +66,8 @@ const SnowfallEffect: React.FC<SnowfallEffectProps> = ({
           size={limitedSize}
           opacity={opacity}
           shape={flakeShape}
+          width={dimensions.width}
+          height={dimensions.height}
         />
       ))}
       {children}

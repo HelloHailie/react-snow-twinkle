@@ -5,6 +5,8 @@ interface SnowflakeProps {
   size: number | 'random'; // 눈송이 크기
   opacity: number; // 눈송이 투명도
   shape: string; // 눈송이 모양 (이모지, 텍스트 등)
+  width: number; // 창 너비
+  height: number; // 창 높이
 }
 
 const SnowflakeParticle: React.FC<SnowflakeProps> = ({
@@ -12,6 +14,8 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
   size,
   opacity,
   shape,
+  width,
+  height,
 }) => {
   const flakeRef = useRef<HTMLDivElement | null>(null);
   const animationFrameRef = useRef<number>();
@@ -19,13 +23,11 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
 
   // 초기 위치 계산을 메모이제이션
   const initialPosition = useMemo(() => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
     return {
       x: Math.random() * width,
       y: Math.random() * height * -1, // 화면 위쪽에 고르게 분포
     };
-  }, []);
+  }, [width, height]);
 
   // 낙하 속도를 메모이제이션 (기준 속도 ± 2)
   const particleFallSpeed = useMemo(() => {
@@ -63,13 +65,13 @@ const SnowflakeParticle: React.FC<SnowflakeProps> = ({
     flake.style.transform = `translate3d(${x}px, ${positionRef.current.y}px, 0)`;
 
     // 화면 밖으로 나가면 위로 재배치
-    if (positionRef.current.y > window.innerHeight + particleSize) {
+    if (positionRef.current.y > height + particleSize) {
       positionRef.current.y = -particleSize * 2;  // 화면 위에서 약간의 여유를 두고 시작
-      positionRef.current.x = Math.random() * window.innerWidth;
+      positionRef.current.x = Math.random() * width;
     }
 
     animationFrameRef.current = requestAnimationFrame(animate);
-  }, [initialPosition, particleFallSpeed, particleSize]);
+  }, [initialPosition, particleFallSpeed, particleSize, height, width]);
 
   useEffect(() => {
     const flake = flakeRef.current;
