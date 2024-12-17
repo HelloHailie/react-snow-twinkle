@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import SnowflakeParticle from "./SnowflakeParticle";
 import styles from "./styles/SnowfallEffect.module.css";
 
@@ -15,57 +15,60 @@ const MAX_FLAKES = 700;
 const MAX_SPEED = 20;
 const MAX_SIZE = 100;
 
-const SnowfallEffect: React.FC<SnowfallEffectProps> = ({
+function SnowfallEffect({
   snowflakeCount = 50,
   fallSpeed = 2,
   flakeSize = 10,
   opacity = 1,
   flakeShape = "❄️",
   children,
-}) => {
+}: SnowfallEffectProps) {
   // fallSpeed와 flakeSize에 대한 제한 적용
-  const limitedFallSpeed = Math.min(Math.max(fallSpeed, 0.1), MAX_SPEED);
-  const limitedFlakeSize = typeof flakeSize === 'number' ? Math.min(Math.max(flakeSize, 1), MAX_SIZE) : flakeSize;
+  const limitedFallSpeed = useMemo(() => 
+    Math.min(Math.max(fallSpeed, 0.1), MAX_SPEED),
+    [fallSpeed]
+  );
+
+  const limitedFlakeSize = useMemo(() => 
+    typeof flakeSize === 'number' ? Math.min(Math.max(flakeSize, 1), MAX_SIZE) : flakeSize,
+    [flakeSize]
+  );
 
   const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    height: typeof window !== 'undefined' ? window.innerHeight : 0
   });
 
-  useEffect(() => {
-    const updateDimensions = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-
-    // ResizeObserver 설정
-    const resizeObserver = new ResizeObserver(() => {
-      updateDimensions();
+  const updateDimensions = useCallback(() => {
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight
     });
+  }, []);
 
-    // document.documentElement를 관찰 대상으로 설정
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const resizeObserver = new ResizeObserver(updateDimensions);
     resizeObserver.observe(document.documentElement);
-
-    // 초기 dimensions 설정
-    updateDimensions();
 
     return () => {
       resizeObserver.disconnect();
     };
-  }, []);
+  }, [updateDimensions]);
 
-  // 눈송이 배열 생성
-  const snowflakes = Array.from({ length: Math.min(snowflakeCount, MAX_FLAKES) }, (_, index) => {
-    // 화면 높이의 2배 범위에 걸쳐 분포시키기
-    const startY = -((index * (dimensions.height * 2)) / snowflakeCount);
-    return {
-      id: index,
-      startY,
-      size: limitedFlakeSize === 'mix' ? Math.min(Math.random() * 3 + 4, MAX_SIZE) : limitedFlakeSize,
-    };
-  });
+  // 눈송이 배열 생성을 메모이제이션
+  const snowflakes = useMemo(() => {
+    const count = Math.min(snowflakeCount, MAX_FLAKES);
+    return Array.from({ length: count }, (_, index) => {
+      const startY = -((index * (dimensions.height * 2)) / count);
+      return {
+        id: index,
+        startY,
+        size: limitedFlakeSize === 'mix' ? Math.min(Math.random() * 3 + 4, MAX_SIZE) : limitedFlakeSize,
+      };
+    });
+  }, [snowflakeCount, dimensions.height, limitedFlakeSize]);
 
   return (
     <div className={styles.snowfallContainer}>
@@ -86,6 +89,6 @@ const SnowfallEffect: React.FC<SnowfallEffectProps> = ({
       </div>
     </div>
   );
-};
+}
 
-export default SnowfallEffect;
+export default React.memo(SnowfallEffect);
