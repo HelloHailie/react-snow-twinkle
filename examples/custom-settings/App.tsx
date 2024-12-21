@@ -35,7 +35,7 @@ function App() {
       />
       <div className={styles.controls}>
         <label>
-          Number of Flakes:
+          Number of Flakes:  {snowflakeCount}
           <input
             type='range'
             min='1'
@@ -43,10 +43,9 @@ function App() {
             value={snowflakeCount}
             onChange={(e) => setsnowflakeCount(Number(e.target.value))}
           />
-          {snowflakeCount}
         </label>
         <label>
-          Fall Speed:
+          Fall Speed: {fallSpeed}
           <input
             type='range'
             min='1'
@@ -54,10 +53,9 @@ function App() {
             value={fallSpeed}
             onChange={(e) => setFallSpeed(Number(e.target.value))}
           />
-          {fallSpeed}
         </label>
         <label>
-          Flake Size:
+          Flake Size:  {typeof flakeSize === 'number' ? flakeSize : 'Mixed'}
           <div className={styles.sizeControl}>
             <input
               type='range'
@@ -67,7 +65,6 @@ function App() {
               onChange={(e) => setFlakeSize(Number(e.target.value))}
               disabled={isMixSize}
             />
-            {typeof flakeSize === 'number' ? flakeSize : 'Mixed'}
             <div className={styles.mixToggle}>
               <label className={styles.switch}>
                 <input
@@ -82,7 +79,7 @@ function App() {
           </div>
         </label>
         <label>
-          Opacity:
+          Opacity: {opacity}
           <input
             type='range'
             min='0'
@@ -91,7 +88,6 @@ function App() {
             value={opacity}
             onChange={(e) => setOpacity(Number(e.target.value))}
           />
-          {opacity}
         </label>
         <label>
           Flake Shape:
