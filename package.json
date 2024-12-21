@@ -20,7 +20,6 @@
   "private": false,
   "files": [
     "dist",
-    "src",
     "README.md",
     "LICENSE"
   ],
