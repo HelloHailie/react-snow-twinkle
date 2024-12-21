@@ -85,8 +85,8 @@ function App() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| snowflakeCount | number | 500 | Number of snowflakes on screen (max 700) |
-| fallSpeed | number | 5 | Snowflake falling speed (1-20) |
+| snowflakeCount | number | 50 | Number of snowflakes on screen (max 700) |
+| fallSpeed | number | 2 | Snowflake falling speed (1-20) |
 | flakeSize | number | 10 | Snowflake size (in px, max 100px) |
 | opacity | number | 1 | Snowflake opacity (0-1) |
 | flakeShape | string | "❄️" | Snowflake shape (emoji, text, etc.) |
