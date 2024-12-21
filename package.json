@@ -1,6 +1,6 @@
 {
   "name": "react-snow-twinkle",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A beautiful snow effect React component with twinkling animation",
   "type": "module",
   "main": "./dist/index.umd.js",
