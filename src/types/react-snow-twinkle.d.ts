@@ -31,6 +31,5 @@ declare module "react-snow-twinkle" {
     flakeShape?: string;
   }
 
-  const SnowTwinkle: React.FC<SnowTwinkleProps>;
-  export default SnowTwinkle;
+  export const SnowTwinkle: React.FC<SnowTwinkleProps>;
 }
