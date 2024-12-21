@@ -1,5 +1,5 @@
-import {  Snowfall} from '../../index';
-import styles from './App.module.css';
+import { Snowfall } from "../../src/index";
+import styles from "./App.module.css";
 
 function App() {
   return (
@@ -7,9 +7,9 @@ function App() {
       <Snowfall
         snowflakeCount={150}
         fallSpeed={3.5}
-        flakeSize="mix"
+        flakeSize='mix'
         opacity={1}
-        flakeShape="❄️"
+        flakeShape='❄️'
       />
       <div className={styles.content}>
         <h1 className={styles.animatedTitle}>Animated Snow Effects</h1>
