@@ -1,9 +1,23 @@
 {
   "name": "react-snow-twinkle",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A beautiful snow effect React component with twinkling animation",
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "homepage": "https://hellohailie.github.io/react-snow-twinkle/",
+  "keywords": [
+    "react",
+    "snow",
+    "animation",
+    "effect",
+    "particle",
+    "winter",
+    "typescript"
+  ],
+  "author": "Seonmin Lee",
+  "license": "MIT",
+  "private": false,
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SnowfallEffect from "../../src/SnowfallEffect";
+import { SnowfallEffect } from '../../src';
 import styles from "./App.module.css";
 
 const MAX_FLAKES = 700;

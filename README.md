@@ -4,6 +4,20 @@
 
 ![React Snow Twinkle Demo](./examples/demo.gif)
 
+## 설치 방법
+
+npm을 사용하여 설치:
+
+```bash
+npm install react-snow-twinkle
+```
+
+또는 yarn을 사용하여 설치:
+
+```bash
+yarn add react-snow-twinkle
+```
+
 ## 프로젝트 개요
 
 React Snow Twinkle은 웹사이트나 웹 애플리케이션에 아름다운 눈 내리는 효과를 추가할 수 있는 React 컴포넌트 라이브러리입니다. TypeScript로 작성되어 타입 안정성을 보장하며, 가볍고 사용하기 쉽습니다.
@@ -36,11 +50,9 @@ React Snow Twinkle은 웹사이트나 웹 애플리케이션에 아름다운 눈
 | opacity | number | 1 | 눈송이 투명도 (0-1) |
 | flakeShape | string | "❄️" | 눈송이 모양 (이모지, 문자 등) |
 
-### 사용 방법
+## 사용 방법
 
 ### 기본 사용법
-
-가장 기본적인 사용 예시:
 
 ```tsx
 import { SnowTwinkle } from 'react-snow-twinkle';
@@ -49,15 +61,12 @@ function App() {
   return (
     <div>
       <SnowTwinkle />
-      <h1>My Winter Wonderland</h1>
     </div>
   );
 }
 ```
 
-### 커스텀 설정
-
-다양한 옵션을 사용하여 눈 효과를 커스터마이징할 수 있습니다:
+### 커스텀 설정 예시
 
 ```tsx
 import { SnowTwinkle } from 'react-snow-twinkle';
@@ -65,22 +74,19 @@ import { SnowTwinkle } from 'react-snow-twinkle';
 function App() {
   return (
     <div>
-      <SnowTwinkle 
+      <SnowTwinkle
         snowflakeCount={100}
-        speed={1.5}
-        wind={2}
-        color="#ffffff"
-        size={4}
+        fallSpeed={8}
+        flakeSize={15}
         opacity={0.8}
-        blur={2}
+        flakeShape="*"
       />
-      <h1>Customized Snow Effect</h1>
     </div>
   );
 }
 ```
 
-### 개발 환경 설정
+## 개발 환경 설정
 
 로컬에서 개발하려면:
 
