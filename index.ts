@@ -1,1 +1,1 @@
-export { default as Snowfall } from "./src/Snowfall";
+export { default as Snowfall } from "./src/SnowfallEffect";

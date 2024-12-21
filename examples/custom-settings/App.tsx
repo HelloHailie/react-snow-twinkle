@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { SnowfallEffect } from '../../src';
+import { Snowfall } from '../../index';
 import styles from "./App.module.css";
 
 const MAX_FLAKES = 700;
@@ -26,7 +26,7 @@ function App() {
 
   return (
     <div className={styles.container}>
-      <SnowfallEffect
+      <Snowfall
         snowflakeCount={snowflakeCount}
         fallSpeed={fallSpeed}
         flakeSize={flakeSize}

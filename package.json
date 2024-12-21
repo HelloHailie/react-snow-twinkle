@@ -3,8 +3,16 @@
   "version": "1.0.2",
   "description": "A beautiful snow effect React component with twinkling animation",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
+    }
+  },
   "homepage": "https://hellohailie.github.io/react-snow-twinkle/",
   "keywords": [
     "react",

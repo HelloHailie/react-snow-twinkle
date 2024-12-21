@@ -48,12 +48,12 @@ React Snow Twinkle is a lightweight and customizable React component that adds a
 ### Basic Usage
 
 ```tsx
-import { SnowTwinkle } from 'react-snow-twinkle';
+import { Snowfall } from 'react-snow-twinkle';
 
 function App() {
   return (
     <div>
-      <SnowTwinkle />
+      <Snowfall />
       {/* Your content */}
     </div>
   );
@@ -63,12 +63,12 @@ function App() {
 ### Custom Usage
 
 ```tsx
-import { SnowTwinkle } from 'react-snow-twinkle';
+import { Snowfall } from 'react-snow-twinkle';
 
 function App() {
   return (
     <div>
-      <SnowTwinkle
+      <Snowfall
         snowflakeCount={100}
         fallSpeed={8}
         flakeSize={15}
