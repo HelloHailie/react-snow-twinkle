@@ -1,4 +1,4 @@
-import { Snowfall } from "../../src/index";
+import { Snowfall } from "react-snow-twinkle";
 import styles from "./App.module.css";
 
 function App() {

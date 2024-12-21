@@ -1,9 +1,18 @@
-import { describe, it, expect, beforeAll, vitest, beforeEach, afterEach } from 'vitest';
-import { render, cleanup } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import SnowflakeParticle from '../SnowflakeParticle';
+import React from "react";
+import {
+  describe,
+  it,
+  expect,
+  beforeAll,
+  vitest,
+  beforeEach,
+  afterEach,
+} from "vitest";
+import { render, cleanup } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import SnowflakeParticle from "../SnowflakeParticle";
 
-describe('SnowflakeParticle 컴포넌트', () => {
+describe("SnowflakeParticle 컴포넌트", () => {
   const mockAnimate = vitest.fn().mockReturnValue({
     cancel: vitest.fn(),
   });
@@ -12,7 +21,7 @@ describe('SnowflakeParticle 컴포넌트', () => {
     fallSpeed: 5,
     size: 10,
     opacity: 0.8,
-    shape: '❄',
+    shape: "❄",
     width: 1000,
     height: 800,
     startY: 0,
@@ -30,22 +39,22 @@ describe('SnowflakeParticle 컴포넌트', () => {
     cleanup();
   });
 
-  it('snowflake 요소가 정상적으로 렌더링되어야 합니다', () => {
+  it("snowflake 요소가 정상적으로 렌더링되어야 합니다", () => {
     const { container } = render(<SnowflakeParticle {...defaultProps} />);
     const snowflake = container.firstChild;
     expect(snowflake).toBeInTheDocument();
     expect(snowflake?.textContent).toBe(defaultProps.shape);
   });
 
-  it('애니메이션이 적용되어야 합니다', () => {
+  it("애니메이션이 적용되어야 합니다", () => {
     render(<SnowflakeParticle {...defaultProps} />);
     expect(mockAnimate).toHaveBeenCalled();
   });
 
-  it('mix 크기가 적용되어야 합니다', () => {
+  it("mix 크기가 적용되어야 합니다", () => {
     const props = {
       ...defaultProps,
-      size: 'mix' as const,
+      size: "mix" as const,
     };
 
     const { container } = render(<SnowflakeParticle {...props} />);
@@ -53,7 +62,7 @@ describe('SnowflakeParticle 컴포넌트', () => {
     expect(snowflake).toBeInTheDocument();
   });
 
-  it('fallSpeed가 제한되어야 합니다', () => {
+  it("fallSpeed가 제한되어야 합니다", () => {
     const props = {
       ...defaultProps,
       fallSpeed: 25, // MAX_SPEED(20)보다 큰 값
@@ -63,7 +72,7 @@ describe('SnowflakeParticle 컴포넌트', () => {
     expect(mockAnimate).toHaveBeenCalled();
   });
 
-  it('컴포넌트가 언마운트될 때 애니메이션이 취소되어야 합니다', () => {
+  it("컴포넌트가 언마운트될 때 애니메이션이 취소되어야 합니다", () => {
     const mockCancel = vitest.fn();
     mockAnimate.mockReturnValue({ cancel: mockCancel });
 
@@ -72,7 +81,7 @@ describe('SnowflakeParticle 컴포넌트', () => {
     expect(mockCancel).toHaveBeenCalled();
   });
 
-  it('opacity가 적용되어야 합니다', () => {
+  it("opacity가 적용되어야 합니다", () => {
     const props = {
       ...defaultProps,
       opacity: 0.5,
@@ -82,7 +91,7 @@ describe('SnowflakeParticle 컴포넌트', () => {
     expect(container.firstChild).toBeInTheDocument();
   });
 
-  it('startY 위치가 적용되어야 합니다', () => {
+  it("startY 위치가 적용되어야 합니다", () => {
     const props = {
       ...defaultProps,
       startY: -100,

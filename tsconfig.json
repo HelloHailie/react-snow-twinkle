@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "outDir": "./dist",
     "declaration": true,
-    "declarationDir": "dist",
-    "emitDeclarationOnly": true
+    "module": "ESNext",
+    "target": "ES5",
+    "lib": ["ESNext", "DOM"],
+    "jsx": "react",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true
   },
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": ["src"]
 }

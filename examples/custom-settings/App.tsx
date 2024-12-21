@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Snowfall } from "../../src/index";
+import { Snowfall } from "react-snow-twinkle";
 import styles from "./App.module.css";
 
 const MAX_FLAKES = 700;
