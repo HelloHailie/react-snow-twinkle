@@ -1,4 +1,4 @@
-name: NPM 패키지 배포
+name: Release
 
 on:
   push:
@@ -6,8 +6,9 @@ on:
       - main
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
+
     steps:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
@@ -21,10 +22,8 @@ jobs:
       - name: 의존성 설치
         run: npm ci
 
-      - name: 빌드
-        run: npm run build
-
-      - name: NPM 배포
-        run: npm publish
+      - name: semantic-release 실행
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
