@@ -1,58 +1,51 @@
 # React Snow Twinkle
 
-눈이 내리는 효과를 쉽게 구현할 수 있는 React 컴포넌트입니다.
+A beautiful React component that makes it easy to implement falling snow effects with twinkling animation.
 
 ![React Snow Twinkle Demo](./examples/demo.gif)
 
-## 설치 방법
+## Installation
 
-npm을 사용하여 설치:
+Using npm:
 
 ```bash
 npm install react-snow-twinkle
 ```
 
-또는 yarn을 사용하여 설치:
+Or using yarn:
 
 ```bash
 yarn add react-snow-twinkle
 ```
 
-## 프로젝트 개요
+## Project Overview
 
-React Snow Twinkle은 웹사이트나 웹 애플리케이션에 아름다운 눈 내리는 효과를 추가할 수 있는 React 컴포넌트 라이브러리입니다. TypeScript로 작성되어 타입 안정성을 보장하며, 가볍고 사용하기 쉽습니다.
+React Snow Twinkle is a lightweight and customizable React component that adds a mesmerizing snow effect to your web applications. Perfect for creating winter-themed websites or adding a magical touch to your user interface.
 
-### 주요 기능
-- 🎨 완전한 커스터마이징
-  - 눈송이 모양 변경 (이모지, 문자, SVG 등)
-  - 눈송이 크기 조절 (최대 100px)
-  - 투명도 조절
-  - 낙하 속도 설정 (1-20 범위)
-- ⚡ 성능 최적화
-  - 최적화된 애니메이션 렌더링
-  - 최대 700개 눈송이 지원
-  - 부드러운 움직임 구현
-- 💻 개발자 친화적
-  - TypeScript로 작성된 타입 안정성
-  - 간단한 컴포넌트 통합
-  - 직관적인 Props 인터페이스
-- 🌐 브라우저 호환성
-  - 모던 브라우저 완벽 지원
-  - 반응형 디자인
-  - 모바일 환경 최적화
+## Key Features
 
-### Props 옵션
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| snowflakeCount | number | 500 | 화면에 표시될 눈송이 개수 (최대 700개) |
-| fallSpeed | number | 5 | 눈송이가 떨어지는 속도 (1-20) |
-| flakeSize | number | 10 | 눈송이 크기 (px 단위, 최대 100px) |
-| opacity | number | 1 | 눈송이 투명도 (0-1) |
-| flakeShape | string | "❄️" | 눈송이 모양 (이모지, 문자 등) |
+- 🎨 Full Customization
+  - Change snowflake shape (emoji, text etc.)
+  - Adjust snowflake size (up to 100px)
+  - Control falling speed (1-20)
+  - Set opacity (0-1)
+  - Change snowflake shape ("❄️" by default)
+- ⚡ High Performance
+  - Optimized animation rendering
+  - Supports up to 700 snowflakes
+  - Smooth movement
+- 💻 Developer Friendly
+  - Written in TypeScript for type safety
+  - Easy component integration
+  - Intuitive Props interface
+- 🌐 Browser Compatibility
+  - Supports modern browsers
+  - Responsive design
+  - Mobile-optimized
 
-## 사용 방법
+## Usage
 
-### 기본 사용법
+### Basic Usage
 
 ```tsx
 import { SnowTwinkle } from 'react-snow-twinkle';
@@ -61,12 +54,13 @@ function App() {
   return (
     <div>
       <SnowTwinkle />
+      {/* Your content */}
     </div>
   );
 }
 ```
 
-### 커스텀 설정 예시
+### Custom Usage
 
 ```tsx
 import { SnowTwinkle } from 'react-snow-twinkle';
@@ -81,45 +75,36 @@ function App() {
         opacity={0.8}
         flakeShape="*"
       />
+      {/* Your content */}
     </div>
   );
 }
 ```
 
-## 개발 환경 설정
+## Props Options
 
-로컬에서 개발하려면:
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| snowflakeCount | number | 500 | Number of snowflakes on screen (max 700) |
+| fallSpeed | number | 5 | Snowflake falling speed (1-20) |
+| flakeSize | number | 10 | Snowflake size (in px, max 100px) |
+| opacity | number | 1 | Snowflake opacity (0-1) |
+| flakeShape | string | "❄️" | Snowflake shape (emoji, text, etc.) |
 
-1. 저장소를 클론합니다:
-```bash
-git clone https://github.com/yourusername/react-snow-twinkle.git
-```
+## Contributing
 
-2. 의존성을 설치합니다:
-```bash
-cd react-snow-twinkle
-npm install
-```
+We welcome contributions! If you'd like to contribute:
 
-3. 개발 서버를 실행합니다:
-```bash
-npm run dev
-```
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
-## 기여하기
+## License
 
-프로젝트에 기여하고 싶으신가요? 언제든 Pull Request를 환영합니다!
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+## Contact
 
-## 라이선스
-
-이 프로젝트는 MIT 라이선스 하에 배포됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
-
-## 문의하기
-
-문제가 발생하거나 제안사항이 있으시다면 GitHub Issues를 통해 알려주세요.
+If you have any issues or suggestions, please let us know through GitHub Issues.
