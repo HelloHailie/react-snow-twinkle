@@ -1,0 +1,36 @@
+# Development
+.git
+.gitignore
+node_modules/
+coverage/
+examples/
+public/
+
+# Config files
+.eslintrc
+.prettierrc
+*.config.js
+*.config.ts
+tsconfig*.json
+vite.config.ts
+vitest.config.ts
+
+# Source files (since we'll publish the dist folder)
+src/
+index.html
+index.ts
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test files
+__tests__/
+*.test.*
+*.spec.*
