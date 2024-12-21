@@ -2,7 +2,7 @@
 
 A beautiful React component that makes it easy to implement falling snow effects with twinkling animation.
 
-![React Snow Twinkle Demo](./examples/demo.gif)
+![React Snow Twinkle Demo](https://hellohailie.github.io/react-snow-twinkle/examples/demo.gif)
 
 ## Installation
 
