@@ -7,6 +7,7 @@ import dts from "vite-plugin-dts";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  base: "./", // 상대 경로로 설정
   plugins: [
     react(),
     dts({
@@ -31,8 +32,11 @@ export default defineConfig({
           if (assetInfo.name === "style.css") {
             return "index.css";
           }
-          return assetInfo.name || ""; // 기본값 반환 추가
+          return assetInfo.name || "";
         },
+        // 청크 파일 설정 추가
+        chunkFileNames: "assets/js/[name]-[hash].js",
+        entryFileNames: "assets/js/[name]-[hash].js",
       },
     },
   },

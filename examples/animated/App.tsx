@@ -1,3 +1,4 @@
+import React from "react";
 import { Snowfall } from "react-snow-twinkle";
 import styles from "./App.module.css";
 

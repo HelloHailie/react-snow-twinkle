@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Snowfall } from "react-snow-twinkle";
 import styles from "./App.module.css";
 
