@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Snowfall } from "react-snow-twinkle";
-import styles from "./App.module.css";
+import { useState, useEffect } from "react";
+import { Snowfall } from "../../../src/index";
+import "./App.css";
 
 const MAX_FLAKES = 700;
 const MAX_SPEED = 20;
@@ -36,7 +36,7 @@ function App() {
   }, [isMixSize]);
 
   return (
-    <div className={styles.container}>
+    <div className='container'>
       <Snowfall
         snowflakeCount={snowflakeCount}
         fallSpeed={fallSpeed}
@@ -44,7 +44,7 @@ function App() {
         opacity={opacity}
         flakeShape={flakeShape}
       />
-      <div className={styles.controls}>
+      <div className='controls'>
         <label>
           Number of Flakes: {snowflakeCount}
           <input
@@ -67,7 +67,7 @@ function App() {
         </label>
         <label>
           Flake Size: {typeof flakeSize === "number" ? flakeSize : "Mixed"}
-          <div className={styles.sizeControl}>
+          <div className='sizeControl'>
             <input
               type='range'
               min='1'
@@ -76,14 +76,14 @@ function App() {
               onChange={(e) => setFlakeSize(Number(e.target.value))}
               disabled={isMixSize}
             />
-            <div className={styles.mixToggle}>
-              <label className={styles.switch}>
+            <div className='mixToggle'>
+              <label className='switch'>
                 <input
                   type='checkbox'
                   checked={isMixSize}
                   onChange={(e) => setIsMixSize(e.target.checked)}
                 />
-                <span className={styles.slider}></span>
+                <span className='slider'></span>
               </label>
               <span>Mix Sizes</span>
             </div>
@@ -102,19 +102,19 @@ function App() {
         </label>
         <label>
           Flake Shape:
-          <div className={styles.emojiContainer}>
+          <div className='emojiContainer'>
             <input
               type='text'
               value={flakeShape}
               onChange={(e) => setFlakeShape(e.target.value)}
               placeholder='Type or select emoji'
             />
-            <div className={styles.emojiList}>
+            <div className='emojiList'>
               {emojiOptions.map((emoji) => (
                 <button
                   key={emoji}
                   onClick={() => setFlakeShape(emoji)}
-                  className={styles.emojiButton}
+                  className='emojiButton'
                 >
                   {emoji}
                 </button>
